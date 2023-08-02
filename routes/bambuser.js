@@ -39,7 +39,7 @@ const getOptions = (req) => {
 }
 
 /* get all shows */
-router.get('/', function(req, res, next) {
+router.get('/shows', function(req, res, next) {
   axios({
     method: 'get',
     url: bambuserShowsEndpoint + '?' + new URLSearchParams(getOptions(req)).toString(),
@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* get individual show by id */
-router.get('/:id', function(req, res, next) {
+router.get('/shows/:id', function(req, res, next) {
   axios({
     method: 'get',
     url: bambuserShowsEndpoint + req.params.id,
