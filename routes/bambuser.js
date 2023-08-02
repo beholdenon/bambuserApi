@@ -16,20 +16,22 @@ const headers = {
 const buildObj = (response, id) => {
   let obj;
   response.data.results.forEach((event) => {
-    obj = {
-      items: [
-        {
-          fields: {
-            name: event.id,
-            title: event.title,
-            metaDescription: event.description,
-            featured: event,
-            events:response.data.results
+    if(event.id === id) {
+      obj = {
+        items: [
+          {
+            fields: {
+              name: event.id,
+              title: event.title,
+              metaDescription: event.description,
+              featured: event,
+              events:response.data.results
+            }
+            
           }
-          
-        }
-      ]
-    };
+        ]
+      };
+    }
   });
   return obj;
 }
