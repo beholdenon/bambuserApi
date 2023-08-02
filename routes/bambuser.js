@@ -25,7 +25,7 @@ const buildObj = (response, id) => {
               title: event.title,
               metaDescription: event.description,
               featured: event,
-              events:response.data.results
+              events:response.data
             }
             
           }
