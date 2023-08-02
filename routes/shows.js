@@ -1,13 +1,16 @@
 var express = require('express');
 const axios = require('axios');
 var router = express.Router();
-const bambuserToken = 'HVsum6UqSkDx6P676BA8YhpNyHjYpTAfWahWR3x4Npdm';
 const bambuserShowsEndpoint = 'https://liveshopping-api.bambuser.com/v1/shows/';
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/vnd.bambuser.v1+json',
-  'Authorization': 'Token ' + bambuserToken
+  'Authorization': 'Token ' + process.env.BAMBUSER_API_TOKEN
 }
 
 const buildObj = (response) => {
@@ -59,7 +62,7 @@ router.get('/:id', function(req, res, next) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/vnd.bambuser.v1+json',
-      'Authorization': 'Token ' + bambuserToken
+      'Authorization': 'Token ' + process.env.BAMBUSER_API_TOKEN
     }
   })
   .then(function (response) {
