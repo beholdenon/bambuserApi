@@ -1,3 +1,4 @@
+const request = require('request');
 var express = require('express');
 const axios = require('axios');
 var router = express.Router();
@@ -11,7 +12,19 @@ router.get('/asset/:id', function(req, res, next) {
     url: contentfulEndpoint + 'assets/' + req.params.id + '?access_token=' + contetnfulAccessToken,
   })
   .then(function (response) {
-      res.send(200, response.data.fields.file.url);
+  	console.log(response.data.fields.file.url);
+
+  	request({
+    url: 'https:' + response.data.fields.file.url,
+    encoding: null
+  }, 
+  (err, resp, buffer) => {
+    if (!err && resp.statusCode === 200){
+    	console.log(resp.body);
+      res.set("Content-Type", "image/jpeg");
+      res.send(resp.body);
+    }
+  });
   })
   .catch(function (error) {
     res.json({});
