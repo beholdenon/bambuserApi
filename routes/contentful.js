@@ -13,18 +13,18 @@ router.get('/asset/:id', function(req, res, next) {
   })
   .then(function (response) {
   	console.log(response.data.fields.file.url);
+  	let contentType = response.data.fields.file.contentType;
 
   	request({
-    url: 'https:' + response.data.fields.file.url,
-    encoding: null
-  }, 
-  (err, resp, buffer) => {
-    if (!err && resp.statusCode === 200){
-    	console.log(resp.body);
-      res.set("Content-Type", "image/jpeg");
-      res.send(resp.body);
-    }
-  });
+	  url: 'https:' + response.data.fields.file.url,
+	    encoding: null
+	  }, 
+	  (err, resp, buffer) => {
+	    if (!err && resp.statusCode === 200){
+	      res.set("Content-Type", contentType);
+	      res.send(resp.body);
+	    }
+	  });
   })
   .catch(function (error) {
     res.json({});
