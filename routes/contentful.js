@@ -31,5 +31,35 @@ router.get('/asset/:id', function(req, res, next) {
   });
   
 });
+ 
+
+
+router.get('/asset/tag/:tag', function(req, res, next) {
+	let url = contentfulEndpoint + 'assets/?access_token=' + contetnfulAccessToken + '&metadata.tags.sys.id[all]=' + req.params.tag;
+	console.log(url);
+  axios({
+    method: 'get',
+    url: url
+  })
+  .then(function (response) {
+  	console.log(response.data.items[0].fields.file.url);
+  	let contentType = response.data.items[0].fields.file.contentType;
+
+  	request({
+	  url: 'https:' + response.data.items[0].fields.file.url,
+	    encoding: null
+	  }, 
+	  (err, resp, buffer) => {
+	    if (!err && resp.statusCode === 200){
+	      res.set("Content-Type", contentType);
+	      res.send(resp.body);
+	    }
+	  });
+  })
+  .catch(function (error) {
+    res.json({});
+  });
+  
+});
 
 module.exports = router;
